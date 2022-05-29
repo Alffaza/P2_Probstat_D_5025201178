@@ -65,3 +65,53 @@ n4_data <- data.frame(n4_groups, n4_lengths)
 bartlett.test(n4_lengths~n4_groups, data= n4_data)
 ```
 mencari homogenity of variances memakai bartlett test
+## ce
+```r
+ggplot(data = n4_data, mapping = aes(n4_groups,n4_lengths))+ geom_point() + geom_smooth(method = 'lm')
+
+model1 <- aov(n4_lengths~factor(n4_groups), data = n4_data)
+anova(model1)
+```
+uji anova
+## d
+```r
+n4_anova = aov(model1)
+TukeyHSD(model1, conf.level = .95)
+```
+dari hasil tersebut didapatkan bahwa terdapat perbedaan panjang signifikan di antara grup 1 dengan grup 3
+# 5
+## a
+```r
+n5_glass <- c("A","A","A","B","B","B","C","C","C","A","A","A","B","B","B","C","C","C","A","A","A","B","B","B","C","C","C")
+n5_temp  <- c(100,100,100,100,100,100,100,100,100,125,125,125,125,125,125,125,125,125,150,150,150,150,150,150,150,150,150)
+n5_light <- c(580,568,570,550,530,579,546,575,599,1090,1087,1085,1070,1035,1000,1045,1053,1066,1392,1380,1386,1328,1312,1299,867,904,889)
+n5_data <- data.frame(glass = n5_glass, temp = n5_temp, light = n5_light)
+qplot(x = temp, y = light, geom = "point", data = n5_data) +
+  facet_grid(.~glass, labeller = label_both)
+```
+visualisasi data
+## b
+```r
+n5_anova <- aov(light~factor(glass), data = n5_data)
+summary(n5_anova)
+```
+uji anova
+## c
+```r
+n5_summary <- group_by(n5_data, glass, temp) %>%
+  summarise(mean=mean(light), sd=sd(light)) %>%
+  arrange(desc(mean))
+print(n5_summary)
+```
+## d
+```r
+n5_tukey <- TukeyHSD(n5_anova)
+n5_tukey
+```
+uji tukey
+## e
+```r
+n5_cld <- multcompLetters4(n5_anova, n5_tukey)
+n5_cld
+```
+untuk membual cld membandingkan 2 objek, memakai `multcompLetters4`

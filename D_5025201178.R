@@ -12,7 +12,7 @@ library(dplyr)
 # 1
 n1_x <- c(78,75,67,77,70,72,78,74,77)
 n1_y <- c(100,95,70,90,90,90,89,90,100)
-n1_selisih = n1_y-n1_y
+n1_selisih = n1_y-n1_x
 
 # 1a
 n1_sdev = sd(n1_selisih, na.rm = FALSE)

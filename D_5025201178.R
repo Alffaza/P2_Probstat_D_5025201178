@@ -1,6 +1,9 @@
 install.packages("BSDA")
+install.packages("ggplot2")
 install.packages("mosaic")
+install.packages("aov")
 library(BSDA)
+library(ggplot2)
 library(mosaic)
 # 1
 n1_x <- c(78,75,67,77,70,72,78,74,77)
@@ -20,6 +23,7 @@ n2_n = 100
 n2_m = 23500
 n2_s = 3900
 tsum.test(mean.x = n2_m, s.x = n2_s ,n.x = n2_n, mu = n2_mh0, alternative = "greater", var.equal =  TRUE)
+2*pnorm(-abs((n2_m - n2_mh0)/(n2_s/sqrt(n2_n)))) # p value from z score
 
 # 3
 n3_an = 19
@@ -46,3 +50,12 @@ n4_groups <- c(1	,1,1,1	,1,1,1	,1	,1	,1	,1,1,1,1	,1	,1	,1	,1	,1	,1	,1	,1	,1	,1	,
 n4_data <- data.frame(n4_groups, n4_lengths)
 
 bartlett.test(n4_lengths~n4_groups, data= n4_data)
+
+ggplot(data = n4_data, mapping = aes(n4_groups,n4_lengths))+ geom_point() + geom_smooth(method = 'lm')
+
+model1 <- aov(n4_lengths~factor(n4_groups), data = n4_data)
+anova(model1)
+
+n4_anova = aov(model1)
+TukeyHSD(model1, conf.level = .95)
+         

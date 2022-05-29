@@ -2,9 +2,13 @@ install.packages("BSDA")
 install.packages("ggplot2")
 install.packages("mosaic")
 install.packages("aov")
+install.packages("multcompView")
+library(readr)
 library(BSDA)
 library(ggplot2)
 library(mosaic)
+library(multcompView)
+library(dplyr)
 # 1
 n1_x <- c(78,75,67,77,70,72,78,74,77)
 n1_y <- c(100,95,70,90,90,90,89,90,100)
@@ -58,4 +62,8 @@ anova(model1)
 
 n4_anova = aov(model1)
 TukeyHSD(model1, conf.level = .95)
-         
+
+# 5
+n5_glass <- c("A","A","A","B","B","B","C","C","C","A","A","A","B","B","B","C","C","C","A","A","A","B","B","B","C","C","C")
+n5_temp  <- c(100,100,100,100,100,100,100,100,100,125,125,125,125,125,125,125,125,125,150,150,150,150,150,150,150,150,150)
+n5_light <- c(580,568,570,550,530,579,546,575,599,1090,1087,1085,1070,1035,1000,1045,1053,1066,1392,1380,1386,1328,1312,1299,867,904,889)
